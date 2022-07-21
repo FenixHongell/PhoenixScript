@@ -1,0 +1,26 @@
+{
+  "name": "phoenixscript",
+  "version": "1.0.0",
+  "description": "A custom programming language written in NodeJS",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/FenixHongell/PhoenixScript.git"
+  },
+  "author": "Fenix Hongell",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/FenixHongell/PhoenixScript/issues"
+  },
+  "homepage": "https://github.com/FenixHongell/PhoenixScript#readme",
+  "dependencies": {
+    "yargs": "^17.5.1"
+  },
+  "bin": {
+    "compile": "./bin/compile.js"
+  }
+}
