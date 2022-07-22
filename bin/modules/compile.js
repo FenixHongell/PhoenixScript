@@ -1,15 +1,13 @@
 const fs = require("fs");
-var { compileIf_JS } = require("./compilers/js/if_js.js");
+var { compileToPython } = require("./compilers/python/compilePython");
 
 async function compile(file) {
   try {
     let fileContent = fs.readFileSync(file);
-    fileContent = await compileIf_JS(fileContent);
+    fileContent = fileContent.toString();
+    fs.writeFile("output.py", compileToPython(fileContent));
   } catch (error) {
-    return console.log(
-      "\x1b[31m%s\x1b[0m",
-      "Compiler ran into an error: " + error
-    );
+    throw new Error("Compiler ran into an error: " + error);
   }
 }
 

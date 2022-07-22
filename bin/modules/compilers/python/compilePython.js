@@ -7,7 +7,7 @@ function compileToPython(code) {
     if (codeSnippets.includes(word)) {
       throw new Error("Illegal word/Declaration: " + word);
     }
-  });
+  }); //TODO Make it save returned value and run again + cleanup & commenting
   changeVoidSystem(codeSnippets);
   changeBracketSystem(codeSnippets);
   changeVariableSystem(codeSnippets);
@@ -15,12 +15,15 @@ function compileToPython(code) {
   changeMFloat(codeSnippets);
   changeMInt(codeSnippets);
   changeMString(codeSnippets);
+
+  return code.join("");
 }
 
 function changeVoidSystem(code) {
   code.forEach((snippet, index) => {
     if (snippet == "void") code[index] = "def";
   });
+  return code;
 }
 function changeBracketSystem(code) {
   code.forEach((snippet, index) => {
@@ -28,6 +31,7 @@ function changeBracketSystem(code) {
       code[index] = ":";
     }
   });
+  return code;
 }
 function changeVariableSystem(code) {
   code.forEach((snippet, index) => {
@@ -36,17 +40,24 @@ function changeVariableSystem(code) {
       snippetParts[0] = "";
     }
   });
+  return code;
 }
 function changeArraySystem(code) {
   code.forEach((snippet, index) => {
+    if (snippet.includes("=")) {
+      let snippet_ = snippet.split("=");
+      snippet = snippet_[0];
+    }
     if (snippet.startsWith("Array[")) {
       let snippetParts = snippet.split("[");
       snippetParts[0] = "";
       snippetParts = snippetParts.join("");
-      snippetParts.split("]");
-      snippetParts.join("");
+      if (snippetParts[snippetParts.length - 1] == "]")
+        snippetParts[snippetParts - 1] = "";
+      code[index] = snippet;
     }
   });
+  return code;
 }
 function changeMInt(code) {
   code.forEach((snippet, index) => {
@@ -54,6 +65,7 @@ function changeMInt(code) {
       code[index].replace("MInt", "int");
     }
   });
+  return code;
 }
 function changeMString(code) {
   code.forEach((snippet, index) => {
@@ -61,6 +73,7 @@ function changeMString(code) {
       code[index].replace("MStr", "str");
     }
   });
+  return code;
 }
 function changeMFloat(code) {
   code.forEach((snippet, index) => {
@@ -68,4 +81,7 @@ function changeMFloat(code) {
       code[index].replace("MFloat", "float");
     }
   });
+  return code;
 }
+
+module.exports.compileToPython = compileToPython;
