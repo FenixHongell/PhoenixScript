@@ -1,5 +1,6 @@
 const ruleSet = require("../../../../ruleSet.json");
 
+//TODO Change from if based to tree based compiler, move all compilers to one file.
 function CompileIf_JS(string) {
   console.log(string);
   let string_parts = string.split(" ");
