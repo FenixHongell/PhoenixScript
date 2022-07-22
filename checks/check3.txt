@@ -1,9 +1,9 @@
-IF 1 == 2 => 
+if 1 == 2 : 
     Var::x = 1
     Var::y = MString(x)
-    RETURN y
+    return y
 
-void A(a) => 
+void A(a) : 
     Var::y = a + 1
     Var::_i) = MInt(y)
     Array[numbers] = [1,2,3,4,5]

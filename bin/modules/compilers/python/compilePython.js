@@ -1,5 +1,8 @@
 const illegalWords = require("../../../../ruleSet.json").illegalWords;
-
+const caseWords = require("../../../../ruleSet.json").caseWords;
+const fs = require("fs");
+var check = 0;
+//TODO make it save the compiled code.
 function compileToPython(code) {
   let codeSnippets = code.split(" ");
   //Check for illegal words
@@ -7,22 +10,29 @@ function compileToPython(code) {
     if (codeSnippets.includes(word)) {
       throw new Error("Illegal word/Declaration: " + word);
     }
-  }); //TODO Make it save returned value and run again + cleanup & commenting
-  changeVoidSystem(codeSnippets);
-  changeBracketSystem(codeSnippets);
-  changeVariableSystem(codeSnippets);
-  changeArraySystem(codeSnippets);
-  changeMFloat(codeSnippets);
-  changeMInt(codeSnippets);
-  changeMString(codeSnippets);
+  });
+  codeSnippets.forEach((word, index) => {
+    if (caseWords.includes(word))
+      codeSnippets[index] = codeSnippets[index].toLowerCase();
+  });
 
-  return code.join("");
+  //TODO cleanup & commenting
+  codeSnippets = changeVoidSystem(codeSnippets);
+  codeSnippets = changeBracketSystem(codeSnippets);
+  codeSnippets = changeVariableSystem(codeSnippets);
+  codeSnippets = changeArraySystem(codeSnippets);
+  codeSnippets = changeMFloat(codeSnippets);
+  codeSnippets = changeMInt(codeSnippets);
+  codeSnippets = changeMString(codeSnippets);
+
+  return codeSnippets.join(" ");
 }
 
 function changeVoidSystem(code) {
   code.forEach((snippet, index) => {
     if (snippet == "void") code[index] = "def";
   });
+  console.log("\x1b[32m%s\x1b[0m", "\nCompiled functions");
   return code;
 }
 function changeBracketSystem(code) {
@@ -31,6 +41,17 @@ function changeBracketSystem(code) {
       code[index] = ":";
     }
   });
+
+  fs.writeFile(
+    "./checks/check" + check + ".txt",
+    code.join(" "),
+    (err, data) => {
+      if (err) console.log("\x1b[31m%s\x1b[0m", error);
+    }
+  );
+  check += 1;
+  console.log("\x1b[32m%s\x1b[0m", "\nCompiled structure");
+
   return code;
 }
 function changeVariableSystem(code) {
@@ -38,8 +59,18 @@ function changeVariableSystem(code) {
     if (snippet.startsWith("var::")) {
       let snippetParts = snippet.split("::");
       snippetParts[0] = "";
+      code[index] = snippetParts.join("");
     }
   });
+  fs.writeFile(
+    "./checks/check" + check + ".txt",
+    code.join(" "),
+    (err, data) => {
+      if (err) console.log("\x1b[31m%s\x1b[0m", error);
+    }
+  );
+  check += 1;
+  console.log("\x1b[32m%s\x1b[0m", "\nCompiled variables");
   return code;
 }
 function changeArraySystem(code) {
@@ -57,6 +88,15 @@ function changeArraySystem(code) {
       code[index] = snippet;
     }
   });
+  fs.writeFile(
+    "./checks/check" + check + ".txt",
+    code.join(" "),
+    (err, data) => {
+      if (err) console.log("\x1b[31m%s\x1b[0m", error);
+    }
+  );
+  check += 1;
+  console.log("\x1b[32m%s\x1b[0m", "\nCompiled arrays");
   return code;
 }
 function changeMInt(code) {
@@ -65,6 +105,15 @@ function changeMInt(code) {
       code[index].replace("MInt", "int");
     }
   });
+  fs.writeFile(
+    "./checks/check" + check + ".txt",
+    code.join(" "),
+    (err, data) => {
+      if (err) console.log("\x1b[31m%s\x1b[0m", error);
+    }
+  );
+  check += 1;
+  console.log("\x1b[32m%s\x1b[0m", "\nCompiled int casts");
   return code;
 }
 function changeMString(code) {
@@ -73,6 +122,15 @@ function changeMString(code) {
       code[index].replace("MStr", "str");
     }
   });
+  fs.writeFile(
+    "./checks/check" + check + ".txt",
+    code.join(" "),
+    (err, data) => {
+      if (err) console.log("\x1b[31m%s\x1b[0m", error);
+    }
+  );
+  check += 1;
+  console.log("\x1b[32m%s\x1b[0m", "\nCompiled string casts");
   return code;
 }
 function changeMFloat(code) {
@@ -81,6 +139,15 @@ function changeMFloat(code) {
       code[index].replace("MFloat", "float");
     }
   });
+  fs.writeFile(
+    "./checks/check" + check + ".txt",
+    code.join(" "),
+    (err, data) => {
+      if (err) console.log("\x1b[31m%s\x1b[0m", error);
+    }
+  );
+  check += 1;
+  console.log("\x1b[32m%s\x1b[0m", "\nCompiled float casts");
   return code;
 }
 
