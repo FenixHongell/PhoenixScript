@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 
-import yargs from "yargs";
+var { compile } = require("./modules/compile");
+var yargs = require("yargs");
 
 const options = yargs.usage("Usage: -f <file name>").option("f", {
   alias: "file",
@@ -8,3 +9,5 @@ const options = yargs.usage("Usage: -f <file name>").option("f", {
   type: "string",
   demandOption: true,
 }).argv;
+
+compile(options.f);

@@ -1,0 +1,4 @@
+{
+  "illegalWords": ["Var::"],
+  "caseWords": ["IF", "ELSE", "ELIF", "RETURN", "BREAK"]
+}
