@@ -1,10 +1,11 @@
 if 1 == 2 : 
     x = 1
-    y = MString(x)
+    y = MStr(x)
 
 def A(a) : 
     y = a + 1
     _i = MInt(y)
-    Array[numbers] = [1,2,3,4,5]
-    numbers.forEach(element, index) =>
-        numbers[index] += 1
+    numbers = [1,2,3,4,5]
+    numbers[0] += 1
+    if 1 == 1 : 
+        1 + 1

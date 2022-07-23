@@ -5,6 +5,7 @@ var check = 0;
 //TODO make it save the compiled code.
 function compileToPython(code) {
   let codeSnippets = code.split(" ");
+  console.log(codeSnippets);
   //Check for illegal words
   illegalWords.forEach((word) => {
     if (codeSnippets.includes(word)) {
@@ -20,7 +21,7 @@ function compileToPython(code) {
   codeSnippets = changeVoidSystem(codeSnippets);
   codeSnippets = changeBracketSystem(codeSnippets);
   codeSnippets = changeVariableSystem(codeSnippets);
-  codeSnippets = changeArraySystem(codeSnippets);
+  //codeSnippets = changeArraySystem(codeSnippets);
   codeSnippets = changeMFloat(codeSnippets);
   codeSnippets = changeMInt(codeSnippets);
   codeSnippets = changeMString(codeSnippets);
@@ -80,39 +81,11 @@ function changeVariableSystem(code) {
   console.log("\x1b[32m%s\x1b[0m", "\nCompiled variables");
   return code;
 }
-function changeArraySystem(code) {
-  // ! Not working
-  console.log(code);
-  code.forEach((snippet, index) => {
-    if (snippet.includes("=")) {
-      let snippet_ = snippet.split("=");
-      snippet = snippet_[0];
-    }
-    if (snippet.startsWith("Array[")) {
-      let snippetParts = snippet.split("[");
-      snippetParts[0] = "";
-      snippetParts = snippetParts.join("");
-      if (snippetParts[snippetParts.length - 1] == "]")
-        snippetParts[snippetParts - 1] = "";
-      code[index] = snippet;
-    }
-  });
-  fs.writeFile(
-    "./checks/check" + check + ".txt",
-    code.join(" "),
-    (err, data) => {
-      if (err) console.log("\x1b[31m%s\x1b[0m", error);
-    }
-  );
-  check += 1;
-  console.log("\x1b[32m%s\x1b[0m", "\nCompiled arrays");
-  return code;
-}
 function changeMInt(code) {
-  // ! Not working
+  // * Working
   code.forEach((snippet, index) => {
     if (snippet.includes("MInt")) {
-      code[index].replace("MInt", "int");
+      code[index] = code[index].replace("MInt", "int");
     }
   });
   fs.writeFile(
@@ -127,10 +100,10 @@ function changeMInt(code) {
   return code;
 }
 function changeMString(code) {
-  // ! Not working
+  // * Working
   code.forEach((snippet, index) => {
     if (snippet.includes("MStr")) {
-      code[index].replace("MStr", "str");
+      code[index] = code[index].replace("MStr", "str");
     }
   });
   fs.writeFile(
@@ -145,10 +118,10 @@ function changeMString(code) {
   return code;
 }
 function changeMFloat(code) {
-  // ! Not working
+  // * Working
   code.forEach((snippet, index) => {
     if (snippet.includes("MFloat")) {
-      code[index].replace("MFloat", "float");
+      code[index] = code[index].replace("MFloat", "float");
     }
   });
   fs.writeFile(
