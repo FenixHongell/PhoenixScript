@@ -22,7 +22,6 @@
     "yargs": "^17.5.1"
   },
   "bin": {
-    "compile": "./bin/compileCommand.js",
-    "run": "./bin/runCode.js"
+    "compile": "./bin/compileCommand.js"
   }
 }

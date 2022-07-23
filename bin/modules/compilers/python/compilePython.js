@@ -48,14 +48,6 @@ function changeBracketSystem(code) {
     }
   });
 
-  fs.writeFile(
-    "./checks/check" + check + ".txt",
-    code.join(" "),
-    (err, data) => {
-      if (err) console.log("\x1b[31m%s\x1b[0m", error);
-    }
-  );
-  check += 1;
   console.log("\x1b[32m%s\x1b[0m", "\nCompiled structure");
 
   return code;
@@ -69,14 +61,6 @@ function changeVariableSystem(code) {
       code[index] = snippetParts.join("");
     }
   });
-  fs.writeFile(
-    "./checks/check" + check + ".txt",
-    code.join(" "),
-    (err, data) => {
-      if (err) console.log("\x1b[31m%s\x1b[0m", error);
-    }
-  );
-  check += 1;
   console.log("\x1b[32m%s\x1b[0m", "\nCompiled variables");
   return code;
 }
@@ -87,14 +71,6 @@ function changeMInt(code) {
       code[index] = code[index].replace("MInt", "int");
     }
   });
-  fs.writeFile(
-    "./checks/check" + check + ".txt",
-    code.join(" "),
-    (err, data) => {
-      if (err) console.log("\x1b[31m%s\x1b[0m", error);
-    }
-  );
-  check += 1;
   console.log("\x1b[32m%s\x1b[0m", "\nCompiled int casts");
   return code;
 }
@@ -105,14 +81,6 @@ function changeMString(code) {
       code[index] = code[index].replace("MStr", "str");
     }
   });
-  fs.writeFile(
-    "./checks/check" + check + ".txt",
-    code.join(" "),
-    (err, data) => {
-      if (err) console.log("\x1b[31m%s\x1b[0m", error);
-    }
-  );
-  check += 1;
   console.log("\x1b[32m%s\x1b[0m", "\nCompiled string casts");
   return code;
 }
@@ -123,14 +91,6 @@ function changeMFloat(code) {
       code[index] = code[index].replace("MFloat", "float");
     }
   });
-  fs.writeFile(
-    "./checks/check" + check + ".txt",
-    code.join(" "),
-    (err, data) => {
-      if (err) console.log("\x1b[31m%s\x1b[0m", error);
-    }
-  );
-  check += 1;
   console.log("\x1b[32m%s\x1b[0m", "\nCompiled float casts");
   return code;
 }
