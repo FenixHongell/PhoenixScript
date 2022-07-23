@@ -21,7 +21,6 @@ function compileToPython(code) {
   codeSnippets = changeVoidSystem(codeSnippets);
   codeSnippets = changeBracketSystem(codeSnippets);
   codeSnippets = changeVariableSystem(codeSnippets);
-  //codeSnippets = changeArraySystem(codeSnippets);
   codeSnippets = changeMFloat(codeSnippets);
   codeSnippets = changeMInt(codeSnippets);
   codeSnippets = changeMString(codeSnippets);

@@ -1,4 +1,4 @@
 {
-  "illegalWords": ["Array[", "Var::"],
+  "illegalWords": ["Var::"],
   "caseWords": ["IF", "ELSE", "ELIF", "RETURN", "BREAK"]
 }
