@@ -29,13 +29,19 @@ function compileToPython(code) {
 }
 
 function changeVoidSystem(code) {
+  // *Works
   code.forEach((snippet, index) => {
-    if (snippet == "void") code[index] = "def";
+    let snippet_ = snippet.split("\n");
+    snippet_.forEach((e, j) => {
+      if (e == "void") snippet_[j] = "def";
+    });
+    code[index] = snippet_.join("\n");
   });
   console.log("\x1b[32m%s\x1b[0m", "\nCompiled functions");
   return code;
 }
 function changeBracketSystem(code) {
+  // *Works
   code.forEach((snippet, index) => {
     if (snippet == "=>") {
       code[index] = ":";
@@ -55,6 +61,7 @@ function changeBracketSystem(code) {
   return code;
 }
 function changeVariableSystem(code) {
+  // * Works
   code.forEach((snippet, index) => {
     if (snippet.startsWith("var::")) {
       let snippetParts = snippet.split("::");
@@ -74,6 +81,8 @@ function changeVariableSystem(code) {
   return code;
 }
 function changeArraySystem(code) {
+  // ! Not working
+  console.log(code);
   code.forEach((snippet, index) => {
     if (snippet.includes("=")) {
       let snippet_ = snippet.split("=");
@@ -100,6 +109,7 @@ function changeArraySystem(code) {
   return code;
 }
 function changeMInt(code) {
+  // ! Not working
   code.forEach((snippet, index) => {
     if (snippet.includes("MInt")) {
       code[index].replace("MInt", "int");
@@ -117,6 +127,7 @@ function changeMInt(code) {
   return code;
 }
 function changeMString(code) {
+  // ! Not working
   code.forEach((snippet, index) => {
     if (snippet.includes("MStr")) {
       code[index].replace("MStr", "str");
@@ -134,6 +145,7 @@ function changeMString(code) {
   return code;
 }
 function changeMFloat(code) {
+  // ! Not working
   code.forEach((snippet, index) => {
     if (snippet.includes("MFloat")) {
       code[index].replace("MFloat", "float");
