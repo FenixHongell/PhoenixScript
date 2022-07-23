@@ -1,86 +1,97 @@
 const illegalWords = require("../../../../ruleSet.json").illegalWords;
-
+const caseWords = require("../../../../ruleSet.json").caseWords;
+const fs = require("fs");
+var check = 0;
+//TODO make it save the compiled code.
 function compileToPython(code) {
   let codeSnippets = code.split(" ");
+  console.log(codeSnippets);
   //Check for illegal words
   illegalWords.forEach((word) => {
     if (codeSnippets.includes(word)) {
       throw new Error("Illegal word/Declaration: " + word);
     }
-  }); //TODO Make it save returned value and run again + cleanup & commenting
-  changeVoidSystem(codeSnippets);
-  changeBracketSystem(codeSnippets);
-  changeVariableSystem(codeSnippets);
-  changeArraySystem(codeSnippets);
-  changeMFloat(codeSnippets);
-  changeMInt(codeSnippets);
-  changeMString(codeSnippets);
+  });
+  codeSnippets.forEach((word, index) => {
+    if (caseWords.includes(word))
+      codeSnippets[index] = codeSnippets[index].toLowerCase();
+  });
 
-  return code.join("");
+  //TODO cleanup & commenting
+  codeSnippets = changeVoidSystem(codeSnippets);
+  codeSnippets = changeBracketSystem(codeSnippets);
+  codeSnippets = changeVariableSystem(codeSnippets);
+  codeSnippets = changeMFloat(codeSnippets);
+  codeSnippets = changeMInt(codeSnippets);
+  codeSnippets = changeMString(codeSnippets);
+
+  return codeSnippets.join(" ");
 }
 
 function changeVoidSystem(code) {
+  // *Works
   code.forEach((snippet, index) => {
-    if (snippet == "void") code[index] = "def";
+    let snippet_ = snippet.split("\n");
+    snippet_.forEach((e, j) => {
+      if (e == "void") snippet_[j] = "def";
+    });
+    code[index] = snippet_.join("\n");
   });
+  console.log("\x1b[32m%s\x1b[0m", "\nCompiled functions");
   return code;
 }
 function changeBracketSystem(code) {
+  // *Works
   code.forEach((snippet, index) => {
     if (snippet == "=>") {
       code[index] = ":";
     }
   });
+
+  console.log("\x1b[32m%s\x1b[0m", "\nCompiled structure");
+
   return code;
 }
 function changeVariableSystem(code) {
+  // * Works
   code.forEach((snippet, index) => {
     if (snippet.startsWith("var::")) {
       let snippetParts = snippet.split("::");
       snippetParts[0] = "";
+      code[index] = snippetParts.join("");
     }
   });
-  return code;
-}
-function changeArraySystem(code) {
-  code.forEach((snippet, index) => {
-    if (snippet.includes("=")) {
-      let snippet_ = snippet.split("=");
-      snippet = snippet_[0];
-    }
-    if (snippet.startsWith("Array[")) {
-      let snippetParts = snippet.split("[");
-      snippetParts[0] = "";
-      snippetParts = snippetParts.join("");
-      if (snippetParts[snippetParts.length - 1] == "]")
-        snippetParts[snippetParts - 1] = "";
-      code[index] = snippet;
-    }
-  });
+  console.log("\x1b[32m%s\x1b[0m", "\nCompiled variables");
   return code;
 }
 function changeMInt(code) {
+  // * Working
   code.forEach((snippet, index) => {
     if (snippet.includes("MInt")) {
-      code[index].replace("MInt", "int");
+      code[index] = code[index].replace("MInt", "int");
     }
   });
+  console.log("\x1b[32m%s\x1b[0m", "\nCompiled int casts");
   return code;
 }
 function changeMString(code) {
+  // * Working
   code.forEach((snippet, index) => {
     if (snippet.includes("MStr")) {
-      code[index].replace("MStr", "str");
+      code[index] = code[index].replace("MStr", "str");
     }
   });
+  console.log("\x1b[32m%s\x1b[0m", "\nCompiled string casts");
   return code;
 }
 function changeMFloat(code) {
+  // * Working
   code.forEach((snippet, index) => {
     if (snippet.includes("MFloat")) {
-      code[index].replace("MFloat", "float");
+      code[index] = code[index].replace("MFloat", "float");
     }
   });
+  console.log("\x1b[32m%s\x1b[0m", "\nCompiled float casts");
   return code;
 }
 
